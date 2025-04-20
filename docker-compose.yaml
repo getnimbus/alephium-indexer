@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  master:
+    container_name: master
+    build:
+      context: .
+      target: production
+    image: master
+    restart: always
+    command: "tini -- /bin/master"
+    logging:
+      driver: json-file
+      options:
+        max-size: "15m"
+        max-file: "3"
+    environment:
+      ENV: prod
+      DEBUG: no
+      MIGRATION: no
+    env_file:
+      - .env
+
+  worker:
+    container_name: worker
+    image: worker
+    restart: always
+    depends_on:
+      - master
+    command: "tini -- /bin/worker"
+    logging:
+      driver: json-file
+      options:
+        max-size: "15m"
+        max-file: "3"
+    environment:
+      ENV: prod
+      DEBUG: no
+      MIGRATION: no
+    env_file:
+      - .env
