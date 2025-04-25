@@ -134,8 +134,8 @@ func (repo *blockTimeRepo) UpdateFailedStatus(ctx context.Context) error {
 
 type BlockTimeDao struct {
 	Id        string    `gorm:"column:id;type:text;primaryKey"`
-	FromTs    int64     `gorm:"column:fromTs;type:bigint;uniqueIndex:blocktime_timestamp_idx"`
-	ToTs      int64     `gorm:"column:toTs;type:bigint;uniqueIndex:blocktime_timestamp_idx"`
+	FromTs    int64     `gorm:"column:from_ts;type:bigint;uniqueIndex:blocktime_timestamp_idx"`
+	ToTs      int64     `gorm:"column:to_ts;type:bigint;uniqueIndex:blocktime_timestamp_idx"`
 	Status    int       `gorm:"column:status;type:int;not null;default:0"`
 	Type      int       `gorm:"column:type;type:int;not null;default:0;<-create"`
 	CreatedAt time.Time `gorm:"column:created_at;autoCreateTime;<-:create"`

@@ -187,11 +187,19 @@ func (w *worker) fetchData(ctx context.Context, blocksCh chan<- []*entity_dto.Bl
 				return
 			}
 
-			blocks = append(blocks, data.Blocks...)
-			txs = append(txs, data.Txs...)
-			events = append(events, data.Events...)
+			if len(data.Blocks) > 0 {
+				blocks = append(blocks, data.Blocks...)
+			}
+			if len(data.Txs) > 0 {
+				txs = append(txs, data.Txs...)
+			}
+			if len(data.Events) > 0 {
+				events = append(events, data.Events...)
+			}
 		}()
 	}
+
+	// TODO: send blocks, txs, events to S3
 
 	// wait for all workers to finish
 	wg.Wait()

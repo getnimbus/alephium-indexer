@@ -82,7 +82,7 @@ func (m *master) fetchBlockTime(ctx context.Context) error {
 		i := fromBlockTime
 		for i <= toBlockTime {
 			blockTimes = append(blockTimes, &entity.BlockTime{
-				FromTs: i,
+				FromTs: i + 1,
 				ToTs:   i + 60000,
 				Status: entity.BlockTime_NOT_READY,
 				Type:   entity.BlockTimeType_REALTIME,
@@ -91,7 +91,7 @@ func (m *master) fetchBlockTime(ctx context.Context) error {
 		}
 	} else {
 		blockTimes = append(blockTimes, &entity.BlockTime{
-			FromTs: fromBlockTime,
+			FromTs: fromBlockTime + 1,
 			ToTs:   toBlockTime,
 			Status: entity.BlockTime_NOT_READY,
 			Type:   entity.BlockTimeType_REALTIME,
