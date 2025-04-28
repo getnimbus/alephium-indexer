@@ -44,7 +44,7 @@ func (svc *AlephiumIndexer) FetchData(ctx context.Context, fromTs int64, toTs in
 			block := &entity_dto.Block{
 				BlockEntry: elem.Block,
 			}
-			block.WithDateKey()
+			block = block.WithDateKey()
 			blocks = append(blocks, block)
 
 			// add txs
@@ -54,6 +54,7 @@ func (svc *AlephiumIndexer) FetchData(ctx context.Context, fromTs int64, toTs in
 						Transaction: tx,
 						BlockHash:   block.Hash,
 						DateKey:     block.DateKey,
+						Timestamp:   block.Timestamp,
 					}
 				})...)
 			}
@@ -65,6 +66,7 @@ func (svc *AlephiumIndexer) FetchData(ctx context.Context, fromTs int64, toTs in
 						ContractEventByBlockHash: event,
 						BlockHash:                block.Hash,
 						DateKey:                  block.DateKey,
+						Timestamp:                block.Timestamp,
 					}
 				})...)
 			}
