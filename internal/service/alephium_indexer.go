@@ -63,6 +63,7 @@ func (svc *AlephiumIndexer) FetchData(ctx context.Context, fromTs int64, toTs in
 				events = append(events, lo.Map(elem.Events, func(event alephium.ContractEventByBlockHash, _ int) *entity_dto.Event {
 					return &entity_dto.Event{
 						ContractEventByBlockHash: event,
+						BlockHash:                block.Hash,
 						DateKey:                  block.DateKey,
 					}
 				})...)

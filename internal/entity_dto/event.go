@@ -7,11 +7,17 @@ import (
 
 type Event struct {
 	alephium.ContractEventByBlockHash
-	DateKey string `json:"dateKey" validate:"-"`
+	BlockHash string `json:"blockHash" validate:"-"`
+	DateKey   string `json:"dateKey" validate:"-"`
 }
 
 func (e *Event) PartitionKey() string {
 	return fmt.Sprintf("%v-%v", e.TxId, e.EventIndex)
+}
+
+func (e *Event) WithBlockHash(blockHash string) *Event {
+	e.BlockHash = blockHash
+	return e
 }
 
 func (e *Event) WithDateKey(date string) *Event {
