@@ -80,7 +80,7 @@ func (m *master) fetchBlockTime(ctx context.Context) error {
 	var blockTimes = make([]*entity.BlockTime, 0)
 	if toBlockTime-fromBlockTime > 1800000 {
 		i := fromBlockTime
-		for i <= toBlockTime {
+		for i < toBlockTime {
 			blockTimes = append(blockTimes, &entity.BlockTime{
 				FromTs: i + 1,
 				ToTs:   i + 60000,
@@ -129,7 +129,7 @@ func (m *master) Monitor(ctx context.Context) error {
 
 	var message string
 	now := time.Now().UnixMilli()
-	delayBlockTime := latestProcessed[0].ToTs - now
+	delayBlockTime := now - latestProcessed[0].ToTs
 	message = fmt.Sprintf("ALPH - %v/%v. Delay %v ms", latestProcessed[0].ToTs, now, delayBlockTime)
 	logger.Info(message)
 	if delayBlockTime > 43200000 { // delay 12 hours
