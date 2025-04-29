@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	alephium "github.com/alephium/go-sdk"
 	"github.com/samber/lo"
@@ -30,6 +31,10 @@ type ResponseData struct {
 }
 
 func (svc *AlephiumIndexer) FetchData(ctx context.Context, fromTs int64, toTs int64) (*ResponseData, error) {
+	if fromTs >= toTs {
+		return nil, fmt.Errorf("fromTs must be less than toTs")
+	}
+
 	resp, _, err := svc.client.BlockflowApi.GetBlockflowBlocksWithEvents(ctx).FromTs(fromTs).ToTs(toTs).Execute()
 	if err != nil {
 		return nil, err

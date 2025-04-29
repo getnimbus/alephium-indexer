@@ -90,6 +90,9 @@ func (m *master) fetchBlockTime(ctx context.Context) error {
 			i += 60000 // 1 min
 		}
 	} else {
+		if fromBlockTime >= toBlockTime {
+			return nil
+		}
 		blockTimes = append(blockTimes, &entity.BlockTime{
 			FromTs: fromBlockTime + 1,
 			ToTs:   toBlockTime,
