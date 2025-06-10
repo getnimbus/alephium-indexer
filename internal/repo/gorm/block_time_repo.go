@@ -87,7 +87,7 @@ func (repo *blockTimeRepo) CreateMany(ctx context.Context, entities ...*entity.B
 		rows = append(rows, row)
 	}
 
-	q := repo.getDB(ctx).CreateInBatches(rows, 200)
+	q := repo.getDB(ctx).Clauses(clause.OnConflict{DoNothing: true}).CreateInBatches(rows, 10)
 	return q.Error
 }
 
